@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "../../styles.css/projectformandlist.css"
+import "../../styles.css/projectformandlist.css";
+
 const ProjectForm = ({ onSubmit, editingProject }) => {
-  const [projectName, setProjectName] = useState("");
+  const [projectName, setProjectName] = useState("");  
   const [status, setStatus] = useState("Pending");
 
   useEffect(() => {
@@ -13,7 +14,7 @@ const ProjectForm = ({ onSubmit, editingProject }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const projectData = { project_name: projectName, status };
+    const projectData = { project_name: projectName, status }; 
     onSubmit(editingProject ? editingProject._id : null, projectData);
     setProjectName("");
     setStatus("Pending");
@@ -25,7 +26,7 @@ const ProjectForm = ({ onSubmit, editingProject }) => {
       <input
         type="text"
         placeholder="Project Name"
-        value={projectName}
+        value={projectName}  
         onChange={(e) => setProjectName(e.target.value)}
         required
       />

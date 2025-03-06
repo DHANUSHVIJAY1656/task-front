@@ -1,43 +1,65 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../styles.css/login.css';
-
+import axios from 'axios';
+import {jwtDecode} from "jwt-decode";
+import Navbar from '../../components/navbar/Navbar';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    try {
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST', 
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify({ email, password }), 
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError('');
+  
+  try {
+      const response = await axios.post('http://localhost:5000/api/login', {
+          email,
+          password
+      }, {
+          headers: { 'Content-Type': 'application/json' }
       });
 
-      const data = await response.json();
+      const data = response.data; // Axios auto-parses JSON
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed'); 
+      if (!response.status === 200) {
+          throw new Error(data.message || 'Login failed');
       }
-      console.log('Login successful:', data);
-      
-      localStorage.setItem('token', data.token); 
-      alert('Login successful!'); 
-    } catch (error) {
-      setError(error.message);
-      console.error('Login error:', error);
-      alert("Login failed");
-    } 
-  };
 
+      console.log('Login successful:', data);
+
+      localStorage.setItem('token', data.token);
+
+      // Decode the token
+      const decoded = jwtDecode(data.token);
+      console.log(decoded);
+
+      // Navigate based on role
+      if (decoded.role === 'Admin') {
+          navigate('/Admindashboard');
+      } else if (decoded.role === 'Manager') {
+          navigate('/manager-dashboard');
+      } else if (decoded.role === 'Client') {
+          navigate('/client-dashboard');
+      } else if (decoded.role === 'Employee') {
+          navigate('/employee-dashboard');
+      } else {
+          navigate('/');
+      }
+  } catch (error) {
+      setError(error.response?.data?.message || error.message);
+      console.error('Login error:', error);
+  } finally {
+      setLoading(false);
+  }
+};
   return (
+    <Navbar>
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
         <h2>Login</h2>
@@ -67,6 +89,7 @@ const Login = () => {
         </button>
       </form>
     </div>
+    </Navbar>
   );
 };
 

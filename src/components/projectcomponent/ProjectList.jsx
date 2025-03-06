@@ -21,6 +21,7 @@ const ProjectList = ({ projects, onEdit, onUpdate }) => {
               <td>{project.created_by?.name || "Unknown"}</td>
               <td>
                 <button onClick={() => onEdit(project)}>Edit</button>
+                {/* <button onClick={() => onUpdate(project._id, project)}>Update</button> */}
               </td>
             </tr>
           ))}
