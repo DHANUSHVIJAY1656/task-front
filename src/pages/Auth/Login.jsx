@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../styles.css/login.css';
 import axios from 'axios';
 import {jwtDecode} from "jwt-decode";
-import Navbar from '../../components/navbar/Navbar';
+import Navbar from "../../components/navbar/Navbar";
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,7 +25,7 @@ const handleSubmit = async (e) => {
           headers: { 'Content-Type': 'application/json' }
       });
 
-      const data = response.data; // Axios auto-parses JSON
+      const data = response.data; 
 
       if (!response.status === 200) {
           throw new Error(data.message || 'Login failed');
@@ -59,8 +59,12 @@ const handleSubmit = async (e) => {
   }
 };
   return (
-    <Navbar>
+   <>
+
+   <Navbar/>
+   <div className='outerform'>
     <div className="login-container">
+      
       <form onSubmit={handleSubmit} className="login-form">
         <h2>Login</h2>
         {error && <p className="error-message">{error}</p>}
@@ -89,7 +93,9 @@ const handleSubmit = async (e) => {
         </button>
       </form>
     </div>
-    </Navbar>
+    </div>
+    </>
+
   );
 };
 

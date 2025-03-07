@@ -1,33 +1,61 @@
-import React from "react";
-import "../../styles.css/projectformandlist.css"
-const ProjectList = ({ projects, onEdit, onUpdate }) => {
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../../styles.css/projectlist.css";
+import Navbar from "../navbar/projectnavbar";
+import { jwtDecode } from "jwt-decode";
+
+const ProjectList = () => {
+  const [projects, setProjects] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found. Please login.");
+      return;
+    }
+
+    try {
+      const decodedUser = jwtDecode(token);
+      setUser(decodedUser);
+
+      axios
+        .get("http://localhost:5000/api/projects", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          console.log("Projects:", res.data);
+          setProjects(res.data);
+        })
+        .catch((err) => console.error("Error fetching projects:", err));
+    } catch (error) {
+      console.error("Invalid token:", error);
+    }
+  }, []);
+
   return (
-    <div>
-      <h2>Projects</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Project Name</th>
-            <th>Status</th>
-            <th>Created By</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {projects.map((project) => (
-            <tr key={project._id}>
-              <td>{project.project_name}</td>
-              <td>{project.status}</td>
-              <td>{project.created_by?.name || "Unknown"}</td>
-              <td>
-                <button onClick={() => onEdit(project)}>Edit</button>
-                {/* <button onClick={() => onUpdate(project._id, project)}>Update</button> */}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <Navbar />
+      <div className="outerform">
+        <div className="project-list">
+          <h2>All Projects</h2>
+          {user && <p>Welcome, {user.name}!</p>}
+          <div className="task-grid">
+            {projects.length > 0 ? (
+              projects.map((p) => (
+                <div key={p._id} className="project-card">
+                  <h3>{p.project_name}</h3>
+                  <p><strong>Created by:</strong> {p.created_by?.name || "Unknown"}</p>
+                  <p><strong>Status:</strong> {p.status || "Not Available"}</p>
+                </div>
+              ))
+            ) : (
+              <p>No projects found.</p>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

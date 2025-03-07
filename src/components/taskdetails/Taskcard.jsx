@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import "../../components/taskdetails/Taskcard";
+import "./task.css";
 import axios from "axios";
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "../navbar/Navbar";
 
-const Admindashboardhome = () => {
+const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -58,7 +58,7 @@ const Admindashboardhome = () => {
     <div className="task-list-container">
 
       <div className="user-info">
-        <h3>Great Welcome You: {user?.name || "Unknown User"}</h3>
+        <h3>Logged in as: {user?.name || "Unknown User"}</h3>
         <p>Role: <span className="role">{user?.role || "No Role"}</span></p>
       </div>
 
@@ -96,4 +96,4 @@ const Admindashboardhome = () => {
   );
 };
 
-export default Admindashboardhome;
+export default TaskList;

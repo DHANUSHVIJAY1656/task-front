@@ -1,0 +1,133 @@
+.task-list-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  .user-info {
+    background: #eef2ff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+   margin-top: 40px;
+  }
+  
+  .role {
+    font-weight: bold;
+    color: #333;
+  }
+  
+
+  .task-grid {
+   
+    display: grid;
+  grid-template-columns: repeat(3, 1fr);
+ 
+  align-items: center;
+    gap: 20px;
+  }
+  
+
+  .task-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .task-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  
+  .task-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+
+  .task-description {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+ 
+  .task-info span {
+    display: block;
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 5px;
+  }
+  
+
+  .task-status {
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+
+  .status {
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-transform: capitalize;
+    font-size: 14px;
+  }
+  
+  .status.pending {
+    background: orange;
+    color: white;
+  }
+  
+  .status.completed {
+    background: green;
+    color: white;
+  }
+  
+  .status.in-progress {
+    background: blue;
+    color: white;
+  }
+  
+
+  .priority {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .priority.low {
+    background: #d4edda;
+    color: #155724;
+  }
+  
+  .priority.medium {
+    background: #fff3cd;
+    color: #856404;
+  }
+  
+  .priority.high {
+    background: #f8d7da;
+    color: #721c24;
+  }
+  
+  
+  .loading,
+  .error {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  .error {
+    color: red;
+  }
+  
