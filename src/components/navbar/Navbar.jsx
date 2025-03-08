@@ -59,7 +59,7 @@ const Navbar = () => {
               </>
             )}
 
-            <li><Link to="/login" className="nav-item" onClick={() => localStorage.removeItem("token")}>Logout</Link></li>
+            <li><Link to="/" className="nav-item" onClick={() => localStorage.removeItem("token")}>Logout</Link></li>
           </ul>
         </div>
       </nav>

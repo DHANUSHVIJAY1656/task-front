@@ -1,0 +1,138 @@
+
+.outerform {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f4f9;
+  padding: 20px;
+}
+
+
+.card {
+  width: 90%;
+  max-width: 1000px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+
+.task-card {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  border-left: 5px solid #007bff;
+}
+
+.task-card:hover {
+  transform: scale(1.02);
+  background: #f0f0f5;
+}
+
+.task-details {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.details-button, .comment-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.details-button:hover, .comment-button:hover {
+  background-color: #0056b3;
+}
+
+
+.comment-section {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.comment-input {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.comment-button {
+  width: 100%;
+  margin-top: 8px;
+  font-size: 14px;
+  padding: 10px;
+}
+
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+
+.task-card.high {
+  border-left: 5px solid #ff4d4d; 
+  background-color: #ffe6e6; 
+}
+
+
+.task-card.medium {
+  border-left: 5px solid #ffa500; 
+  background-color: #fff3e6; 
+}
+
+
+.task-card.low {
+  border-left: 5px solid #28a745; 
+  background-color: #e6ffe6; 
+}
+
+@media (max-width: 600px) {
+  .task-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .comment-input {
+    font-size: 12px;
+  }
+
+  .comment-button {
+    font-size: 12px;
+    padding: 8px;
+  }
+}

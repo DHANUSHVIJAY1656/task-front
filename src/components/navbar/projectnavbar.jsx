@@ -27,7 +27,7 @@ const Navbar = () => {
 
             <li>
               <Link
-                to="/login"
+                to="/"
                 className="nav-item"
                 onClick={() => localStorage.removeItem("token")}
               >

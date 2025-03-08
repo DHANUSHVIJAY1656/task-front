@@ -14,7 +14,7 @@ const Tasklist = ({ taskId }) => {
 
     const fetchTaskDetails = async () => {
       try {
-        const response = await axios.get(`/api/tasks/${taskId}`, {
+        const response = await axios.get(`http://localhost:5000/api/tasks/${taskId}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setTask(response.data);

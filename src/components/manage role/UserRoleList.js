@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles.css/userlist.css";
-import Navbar from "../navbar/Navbar";
+import Navbar from "../navbar/usermanagenav"
 import { jwtDecode } from "jwt-decode";
 
 const UserRoleList = () => {
@@ -10,7 +10,7 @@ const UserRoleList = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [error, setError] = useState("");
 
-  // Available roles
+  
   const roles = ["Client", "Employee", "Manager", "Admin"];
 
   useEffect(() => {

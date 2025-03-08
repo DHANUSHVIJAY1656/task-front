@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./pages/Auth/Login";
 import CreateTask from "./components/createtask/Createtask";
-import Tasklist from "./pages/Admin/TaskList";
 import AddComment from "./pages/Admin/AddComments";
 import Home from "./components/homepage/home";
 import Admindashboardhome from "./pages/Admin/AdminDashboard";
@@ -14,6 +13,7 @@ import ProjectList from "./components/projectcomponent/ProjectList";
 import UpdateUserRole from "./components/manage role/updaterole";
 import UserList from "./components/manage role/userlist";
 import UserRoleList from "./components/manage role/UserRoleList";
+import AssignedTasks from "./components/taskdetails/tasklisttouser";
 
 const App = () => {
   return (
@@ -41,7 +41,7 @@ const App = () => {
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["Employee"]} />}>
-          <Route path="/tasks" element={<Tasklist />} />
+          <Route path="/tasks" element={<AssignedTasks />} />
         </Route>
       </Routes>
     </Router>

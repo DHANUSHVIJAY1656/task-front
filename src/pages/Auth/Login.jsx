@@ -47,7 +47,7 @@ const handleSubmit = async (e) => {
       } else if (decoded.role === 'Client') {
           navigate('/client-dashboard');
       } else if (decoded.role === 'Employee') {
-          navigate('/employee-dashboard');
+          navigate('/tasks');
       } else {
           navigate('/');
       }

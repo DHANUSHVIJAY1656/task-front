@@ -23,7 +23,7 @@ const CreateProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const token = localStorage.getItem("token"); // Get the token
+    const token = localStorage.getItem("token"); 
     
     if (!token) {
       alert("Access Denied. No token provided.");

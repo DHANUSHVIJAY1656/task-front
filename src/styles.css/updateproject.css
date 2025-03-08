@@ -1,13 +1,14 @@
-/* Centering the form */
+
 .outerform {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: #f4f4f4;
+ 
 }
 
-/* Card Styling */
+
 .card {
   background: #ffffff;
   padding: 25px;
@@ -15,16 +16,17 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 350px;
   text-align: center;
+
 }
 
-/* Form title */
+
 .card h2 {
   margin-bottom: 20px;
   color: #333;
   font-size: 22px;
 }
 
-/* Label Styling */
+
 label {
   display: block;
   font-weight: 600;
@@ -33,7 +35,7 @@ label {
   color: #444;
 }
 
-/* Input and Select Styling */
+
 select, input {
   width: 100%;
   padding: 8px;
@@ -44,7 +46,7 @@ select, input {
   background-color: #fff;
 }
 
-/* Button Styling */
+
 button {
   width: 100%;
   background-color: #007bff;
@@ -66,7 +68,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Responsive Design */
+
 @media (max-width: 400px) {
   .card {
       width: 90%;
