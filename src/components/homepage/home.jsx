@@ -5,7 +5,7 @@ import "./home.css";
 const Home = () => {
   return (
     <div className="container">
-      <h1 className="title">Task Management</h1>
+      <h1 className="title">Task Management</h1><br/>
       <p className="subtitle">Organize your tasks efficiently</p>
       <Link to="/login">
         <button className="button">Click Me</button>

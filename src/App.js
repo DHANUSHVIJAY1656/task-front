@@ -14,6 +14,7 @@ import UpdateUserRole from "./components/manage role/updaterole";
 import UserList from "./components/manage role/userlist";
 import UserRoleList from "./components/manage role/UserRoleList";
 import AssignedTasks from "./components/taskdetails/tasklisttouser";
+import ProjectUserSearch from "./pages/Manager/projectteamdetails";
 
 const App = () => {
   return (
@@ -37,7 +38,8 @@ const App = () => {
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["Manager"]} />}>
-          <Route path="/addcomments" element={<AddComment />} />
+          <Route path="/manager-dashboard" element={<AddComment />} />
+          <Route path="/team" element={<ProjectUserSearch />} />
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["Employee"]} />}>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import "../../components/taskdetails/Taskcard";
+import "../../styles.css/task.css";
 import axios from "axios";
 import Navbar from "../../components/navbar/Navbar";
 

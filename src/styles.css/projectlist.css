@@ -1,16 +1,18 @@
 
 .outerform {
-    margin-top: 50px;
+    margin-top: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     background-color: #f4f4f9;
     padding: 20px;
+
   }
   
  
   .project-list {
+
     width: 90%;
     max-width: 800px;  
     background: #fff;
@@ -39,7 +41,7 @@
  
   .task-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     justify-content: center; 
     padding: 20px;

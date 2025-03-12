@@ -11,7 +11,7 @@ const AssignedTasks = () => {
   const [userName, setUserName] = useState(""); 
   const [expandedTask, setExpandedTask] = useState(null); 
   const [taskDetails, setTaskDetails] = useState({}); 
-  const [commentText, setCommentText] = useState(""); 
+  const [commentText, setCommentText] = useState({}); 
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -59,9 +59,7 @@ const AssignedTasks = () => {
     try {
       const response = await axios.get(
         `http://localhost:5000/api/tasks/${taskId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` }, 
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setTaskDetails((prev) => ({ ...prev, [taskId]: response.data }));
@@ -72,8 +70,12 @@ const AssignedTasks = () => {
     }
   };
 
+  const handleCommentChange = (taskId, value) => {
+    setCommentText((prev) => ({ ...prev, [taskId]: value }));
+  };
+
   const addComment = async (taskId) => {
-    if (!commentText.trim()) return;
+    if (!commentText[taskId]?.trim()) return;
 
     const token = localStorage.getItem("token");
 
@@ -87,22 +89,22 @@ const AssignedTasks = () => {
       const user_id = decoded.id;
 
       await axios.post(
-        
         `http://localhost:5000/api/tasks/${taskId}/comments`,
-        { user_id, comment: commentText },
+        { user_id, comment: commentText[taskId] },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-    
+     
       setTaskDetails((prev) => ({
         ...prev,
         [taskId]: {
           ...prev[taskId],
-          comments: [...prev[taskId].comments, { user_id: { name: userName }, comment: commentText }]
+          comments: [...prev[taskId]?.comments || [], { user_id: { name: userName }, comment: commentText[taskId] }]
         }
       }));
 
-      setCommentText(""); 
+      
+      setCommentText((prev) => ({ ...prev, [taskId]: "" }));
     } catch (error) {
       console.error("Error adding comment:", error.response?.data || error);
       setError("Could not add comment.");
@@ -123,7 +125,7 @@ const AssignedTasks = () => {
           <div className="task-grid">
             {tasks.length > 0 ? (
               tasks.map((task) => (
-                <div key={task._id} className="task-card">
+                <div key={task._id} className={`task-card ${task.priority?.toLowerCase() || "low"}`}>
                   <h3>{task.title}</h3>
                   <p><strong>Project:</strong> {task.project_id?.project_name || "N/A"}</p>
                   <p><strong>Assigned By:</strong> {task.assigned_by?.name || "Unknown"}</p>
@@ -140,9 +142,8 @@ const AssignedTasks = () => {
                       <p><strong>Priority:</strong> {taskDetails[task._id].priority}</p>
                       <p><strong>Deadline:</strong> {new Date(taskDetails[task._id].deadline).toDateString()}</p>
                       
-
                       <h4>Comments</h4>
-                      {taskDetails[task._id].comments.length > 0 ? (
+                      {taskDetails[task._id].comments?.length > 0 ? (
                         taskDetails[task._id].comments.map((comment, index) => (
                           <p key={index}>
                             <strong>{comment.user_id?.name || "Anonymous"}:</strong> {comment.comment}
@@ -152,13 +153,12 @@ const AssignedTasks = () => {
                         <p>No comments yet.</p>
                       )}
 
-                     
                       <div className="comment-section">
                         <textarea
                           className="comment-input"
                           placeholder="Write a comment..."
-                          value={commentText}
-                          onChange={(e) => setCommentText(e.target.value)}
+                          value={commentText[task._id] || ""}
+                          onChange={(e) => handleCommentChange(task._id, e.target.value)}
                         />
                         <button className="comment-button" onClick={() => addComment(task._id)}>Add Comment</button>
                       </div>

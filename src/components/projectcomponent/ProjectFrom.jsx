@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode"; 
-import "../../styles.css/projectform.css";
+import "../../";
 import Navbar from "../navbar/projectnavbar";
 
 const getTokenUser = () => {
