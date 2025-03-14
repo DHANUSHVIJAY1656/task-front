@@ -1,0 +1,179 @@
+.task-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  padding: 2rem;
+  animation: fadeIn 0.5s ease-in-out;
+  color: rgb(254, 254, 254);
+  margin-top: 35px;
+}
+
+
+.user-info {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+.user-info h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.role {
+  font-weight: bold;
+  color: #ffea00;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+}
+
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+
+.task-card {
+  background: #fff;
+  backdrop-filter: blur(8px);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+  color: black;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.task-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+.task-description {
+  font-size: 1rem;
+  color: #d3320a;
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+
+.task-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  color: black;
+}
+
+.task-info span {
+  margin-bottom: 5px;
+}
+
+
+.task-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.status {
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  text-transform: capitalize;
+}
+
+
+.status.pending {
+  background: #ff9800;
+  color: white;
+}
+
+.status.completed {
+  background: #4caf50;
+  color: white;
+}
+
+.status.in-progress {
+  background: #2196f3;
+  color: white;
+}
+
+
+.priority {
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  text-transform: capitalize;
+}
+
+.priority.low {
+  background: #28a745;
+}
+
+.priority.medium {
+  background: #ffc107;
+}
+
+.priority.high {
+  background: #dc3545;
+}
+
+
+.no-tasks {
+  font-size: 1.2rem;
+  text-align: center;
+  color: rgb(12, 1, 1);
+}
+
+
+.loading, .error {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff4d4d;
+  text-align: center;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .user-info {
+    width: 95%;
+  }
+  
+  .task-grid {
+    grid-template-columns: 1fr;
+  }
+}

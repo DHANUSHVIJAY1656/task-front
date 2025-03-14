@@ -42,7 +42,7 @@ const Navbar = () => {
 
             {role === "Manager" && (
               <>
-                <li><Link to="/team" className="nav-item">Team</Link></li>
+                {/* <li><Link to="/createandtask" className="nav-item">Create Task</Link></li> */}
                 <li><Link to="/reports" className="nav-item">Reports</Link></li>
               </>
             )}

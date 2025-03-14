@@ -9,6 +9,8 @@ const AssignedTasks = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
+  const [role, setRole] = useState("");
   const [expandedTask, setExpandedTask] = useState(null);
   const [taskDetails, setTaskDetails] = useState({});
   const [commentText, setCommentText] = useState({});
@@ -26,17 +28,22 @@ const AssignedTasks = () => {
       try {
         const decoded = jwtDecode(token);
         setUserName(decoded.name);
+        setUserId(decoded.id);
+        setRole(decoded.role);
 
-        const userId = decoded.id;
         const response = await axios.get(
-          `http://localhost:5000/api/tasks/assigned/${userId}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          `http://localhost:5000/api/tasks/assigned/${decoded.id}`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
-        const sortedTasks = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+      
+        const sortedTasks = response.data.sort((a, b) => {
+          const dateA = new Date(a.created_at || a.deadline).getTime();
+          const dateB = new Date(b.created_at || b.deadline).getTime();
+          return dateB - dateA; 
+        });
+
         setTasks(sortedTasks);
-        setTasks(response.data);
       } catch (err) {
         setError("Error fetching tasks. Please try again.");
       } finally {
@@ -69,10 +76,7 @@ const AssignedTasks = () => {
       setTaskDetails((prev) => ({ ...prev, [taskId]: response.data }));
       setExpandedTask(taskId);
     } catch (error) {
-      console.error(
-        "Error fetching task details:",
-        error.response?.data || error
-      );
+      console.error("Error fetching task details:", error.response?.data || error);
       setError("Could not fetch task details.");
     }
   };
@@ -92,12 +96,9 @@ const AssignedTasks = () => {
     }
 
     try {
-      const decoded = jwtDecode(token);
-      const user_id = decoded.id;
-
       await axios.post(
         `http://localhost:5000/api/tasks/${taskId}/comments`,
-        { user_id, comment: commentText[taskId] },
+        { user_id: userId, comment: commentText[taskId] },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -107,7 +108,7 @@ const AssignedTasks = () => {
           ...prev[taskId],
           comments: [
             ...(prev[taskId]?.comments || []),
-            { user_id: { name: userName }, comment: commentText[taskId] },
+            { user_id: { _id: userId, name: userName }, comment: commentText[taskId] },
           ],
         },
       }));
@@ -124,8 +125,16 @@ const AssignedTasks = () => {
       <Navbar />
       <div className="manager-container">
         <div className="manager-card">
-          <h2>Welcome, {userName} 👋</h2>
-          <h3>Assigned Tasks</h3>
+          {role === "client" ? (
+            <>
+              <h2>Welcome, {userName} 👋</h2>
+              <p className="quote">
+                "Success is not the key to happiness. Happiness is the key to success."
+              </p>
+            </>
+          ) : (
+            <h3>Assigned Tasks</h3>
+          )}
 
           {loading && <p>Loading tasks...</p>}
           {error && <p className="error-message">{error}</p>}
@@ -133,84 +142,56 @@ const AssignedTasks = () => {
           <div className="task-grid">
             {tasks.length > 0
               ? tasks.map((task) => (
-                  <div
-                    key={task._id}
-                    className={`task-card ${
-                      task.priority?.toLowerCase() || "low"
-                    }`}
-                  >
+                  <div key={task._id} className={`task-card ${task.priority?.toLowerCase() || "low"}`}>
                     <h3>{task.title}</h3>
-                    <p>
-                      <strong>Project:</strong>{" "}
-                      {task.project_id?.project_name || "N/A"}
-                    </p>
-                    <p>
-                      <strong>Assigned By:</strong>{" "}
-                      {task.assigned_by?.name || "Unknown"}
-                    </p>
-                    <p>
-                      <strong>Status:</strong> {task.status}
-                    </p>
+                    <p><strong>Project:</strong> {task.project_id?.project_name || "N/A"}</p>
+                    <p><strong>Assigned By:</strong> {task.assigned_by?.name || "Unknown"}</p>
+                    <p><strong>Status:</strong> {task.status}</p>
 
-                    <button
-                      className="details-button"
-                      onClick={() => fetchTaskDetails(task._id)}
-                    >
-                      {expandedTask === task._id
-                        ? "Hide Details"
-                        : "View Details"}
+                    <button className="details-button" onClick={() => fetchTaskDetails(task._id)}>
+                      {expandedTask === task._id ? "Hide Details" : "View Details"}
                     </button>
 
                     {expandedTask === task._id && taskDetails[task._id] && (
                       <div className="task-details">
                         <h4>Task Details</h4>
-                        <p>
-                          <strong>Description:</strong>{" "}
-                          {taskDetails[task._id].task_description}
-                        </p>
-                        <p>
-                          <strong>Priority:</strong>{" "}
-                          {taskDetails[task._id].priority}
-                        </p>
-                        <p>
-                          <strong>Deadline:</strong>{" "}
-                          {new Date(
-                            taskDetails[task._id].deadline
-                          ).toDateString()}
-                        </p>
+                        <p><strong>Description:</strong> {taskDetails[task._id].task_description}</p>
+                        <p><strong>Priority:</strong> {taskDetails[task._id].priority}</p>
+                        <p><strong>Deadline:</strong> {new Date(taskDetails[task._id].deadline).toDateString()}</p>
 
+                        
                         <h4>Comments</h4>
                         {taskDetails[task._id].comments?.length > 0 ? (
-                          taskDetails[task._id].comments.map(
-                            (comment, index) => (
-                              <p key={index}>
-                                <strong>
-                                  {comment.user_id?.name || "Anonymous"}:
-                                </strong>{" "}
-                                {comment.comment}
-                              </p>
+                          taskDetails[task._id].comments
+                            .filter(
+                              (comment) =>
+                                role === "admin" ||
+                                role === "manager" ||
+                                comment.user_id?._id === userId
                             )
-                          )
+                            .map((comment, index) => (
+                              <p key={index}>
+                                <strong>{comment.user_id?.name || "Anonymous"}:</strong> {comment.comment}
+                              </p>
+                            ))
                         ) : (
                           <p>No comments yet.</p>
                         )}
 
-                        <div className="comment-box">
-                          <textarea
-                            className="comment-input"
-                            placeholder="Write a comment..."
-                            value={commentText[task._id] || ""}
-                            onChange={(e) =>
-                              handleCommentChange(task._id, e.target.value)
-                            }
-                          />
-                          <button
-                            className="submit-button"
-                            onClick={() => addComment(task._id)}
-                          >
-                            Add Comment
-                          </button>
-                        </div>
+                        
+                        {role === "Client" && (
+                          <div className="comment-box">
+                            <textarea
+                              className="comment-input"
+                              placeholder="Write a comment..."
+                              value={commentText[task._id] || ""}
+                              onChange={(e) => handleCommentChange(task._id, e.target.value)}
+                            />
+                            <button className="submit-button" onClick={() => addComment(task._id)}>
+                              Add Comment
+                            </button>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>

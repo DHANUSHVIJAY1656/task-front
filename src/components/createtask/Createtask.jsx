@@ -19,6 +19,7 @@ const CreateTask = () => {
   const [users, setUsers] = useState([]);
   const [projects, setProjects] = useState([]);
   const [assignedByName, setAssignedByName] = useState("");
+  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -34,7 +35,6 @@ const CreateTask = () => {
       console.error("Error decoding token", error);
     }
 
-    
     axios
       .get("http://localhost:5000/api/users", {
         headers: { Authorization: `Bearer ${token}` },
@@ -77,89 +77,120 @@ const CreateTask = () => {
   return (
     <>
       <Navbar />
-      <div className="line">
-        <div className="task-form-container">
+      <div className="task-form-container">
+        <form onSubmit={handleSubmit} className="task-form">
           <h2>Create a New Task</h2>
-          <form onSubmit={handleSubmit} className="task-form">
-            <div className="form-group">
-              <label>Task Name</label>
-              <input
-                type="text"
-                name="task_name"
-                onChange={handleChange}
-                required
-              />
-            </div>
 
-            <div className="form-group">
-              <label>Description</label>
-              <textarea
-                name="task_description"
-                onChange={handleChange}
-              ></textarea>
-            </div>
+          <div className="form-group">
+            <label>Task Name</label>
+            <input
+              type="text"
+              name="task_name"
+              onChange={handleChange}
+              required
+              placeholder="Enter task name"
+            />
+          </div>
 
-            <div className="form-group">
-              <label>Task Document (URL)</label>
-              <input type="text" name="task_doc" onChange={handleChange} />
-            </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              name="task_description"
+              onChange={handleChange}
+              placeholder="Enter task description"
+            ></textarea>
+          </div>
 
-            <div className="form-group">
-              <label>Assigned To</label>
-              <select name="assigned_to" onChange={handleChange} required>
-                <option value="">Select User</option>
-                {users.map((user) => (
-                  <option key={user._id} value={user._id}>
-                    {user.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="form-group">
+            <label>Task Document (URL)</label>
+            <input
+              type="text"
+              name="task_doc"
+              onChange={handleChange}
+              placeholder="Provide a document link"
+            />
+          </div>
 
-            <div className="form-group">
-              <label>Assigned By</label>
-              <input type="text" value={assignedByName} readOnly />
-            </div>
+          <div className="form-group">
+            <label>Assigned To</label>
+            <select name="assigned_to" onChange={handleChange} required>
+              <option value="">Select User</option>
+              {users.map((user) => (
+                <option key={user._id} value={user._id}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            <div className="form-group">
-              <label>Deadline</label>
-              <input
-                type="date"
-                name="deadline"
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <div className="form-group">
+            <label>Assigned By</label>
+            <input type="text" value={assignedByName} readOnly />
+          </div>
 
-            <div className="form-group">
-              <label>Project</label>
-              <select name="project_id" onChange={handleChange} required>
-                <option value="">Select Project</option>
-                {projects.map((project) => (
-                  <option key={project._id} value={project._id}>
-                    {project.project_name}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="form-group">
+            <label>Deadline</label>
+            <input
+              type="date"
+              name="deadline"
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-            <div className="form-group">
-              <label>Priority</label>
-              <select name="priority" onChange={handleChange}>
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-              </select>
-            </div>
+          <div className="form-group">
+            <label>Project</label>
+            <select name="project_id" onChange={handleChange} required>
+              <option value="">Select Project</option>
+              {projects.map((project) => (
+                <option key={project._id} value={project._id}>
+                  {project.project_name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            <button type="submit" className="submit-btn">
-              Create Task
-            </button>
-          </form>
-        </div>
+          <div className="form-group">
+            <label>Priority</label>
+            <div className="task-priority">
+              <div
+                className={`priority-option high ${
+                  taskData.priority === "High" ? "selected" : ""
+                }`}
+                onClick={() => setTaskData({ ...taskData, priority: "High" })}
+              >
+                High
+              </div>
+              <div
+                className={`priority-option medium ${
+                  taskData.priority === "Medium" ? "selected" : ""
+                }`}
+                onClick={() =>
+                  setTaskData({ ...taskData, priority: "Medium" })
+                }
+              >
+                Medium
+              </div>
+              <div
+                className={`priority-option low ${
+                  taskData.priority === "Low" ? "selected" : ""
+                }`}
+                onClick={() => setTaskData({ ...taskData, priority: "Low" })}
+              >
+                Low
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" className="submit-btn">
+            Create Task
+          </button>
+        </form>
       </div>
     </>
   );
 };
 
 export default CreateTask;
+
+

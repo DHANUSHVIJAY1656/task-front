@@ -4,15 +4,13 @@ import "../../styles.css/updateproject.css";
 import Navbar from "../navbar/projectnavbar";
 
 const UpdateProject = () => {
-  const [projects, setProjects] = useState([]); 
+  const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
- 
   const statusOptions = ["Pending", "In Progress", "Completed", "On Hold"];
 
-  
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -28,7 +26,6 @@ const UpdateProject = () => {
     fetchProjects();
   }, []);
 
- 
   const handleProjectChange = (e) => {
     const projectId = e.target.value;
     const project = projects.find((p) => p._id === projectId);
@@ -36,27 +33,26 @@ const UpdateProject = () => {
     setStatus(project?.status || "");
   };
 
- 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    
+
     if (!selectedProject || !selectedProject._id) {
       alert("Invalid project selection. Please choose a project.");
       return;
     }
-  
-    console.log("Updating project with ID:", selectedProject._id); // Debug log
-    
+
+    console.log("Updating project with ID:", selectedProject._id); 
+
     setLoading(true);
     const token = localStorage.getItem("token");
-  
+
     try {
       const response = await axios.put(
         `http://localhost:5000/api/update/${selectedProject._id}`,
         { project_name: selectedProject.project_name, status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-  
+
       console.log("Update response:", response.data);
       alert("Project updated successfully");
     } catch (error) {
@@ -66,42 +62,44 @@ const UpdateProject = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <>
       <Navbar />
       <div className="outerform">
-        <div className="card">
+        <div className="update-card">
           <h2>Update Project</h2>
           <form onSubmit={handleUpdate}>
-          
-            <label>Select Project</label>
-            <select onChange={handleProjectChange} required>
-              <option value="">-- Select Project --</option>
-              {projects.map((project) => (
-                <option key={project._id} value={project._id}>
-                  {project.project_name}
-                </option>
-              ))}
-            </select>
+            <div className="form-group">
+              <label>Select Project</label>
+              <select className="form-control" onChange={handleProjectChange} required>
+                <option value="">-- Select Project --</option>
+                {projects.map((project) => (
+                  <option key={project._id} value={project._id}>
+                    {project.project_name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-           
-            <label>Status</label>
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              required
-            >
-              <option value="">-- Select Status --</option>
-              {statusOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            <div className="form-group">
+              <label>Status</label>
+              <select
+                className="form-control"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                required
+              >
+                <option value="">-- Select Status --</option>
+                {statusOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-            <button type="submit" disabled={loading}>
+            <button type="submit" className="update-btn" disabled={loading}>
               {loading ? "Updating..." : "Update"}
             </button>
           </form>

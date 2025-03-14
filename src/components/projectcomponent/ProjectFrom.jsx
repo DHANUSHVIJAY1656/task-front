@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode"; 
-import "../../";
+import "../../styles.css/createproject.css";
 import Navbar from "../navbar/projectnavbar";
 
 const getTokenUser = () => {
@@ -50,28 +50,32 @@ const CreateProject = () => {
       alert(error.response?.data?.message || "Error creating project");
     }
   };
-  
 
   return (
     <>
-    <Navbar/>
-    <div className="outerform">
-    <div className="card">
-      <h2>Create Project</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Project Name</label>
-        <input
-          type="text"
-          value={projectName}
-          onChange={(e) => setProjectName(e.target.value)}
-          required
-        />
-        <label>Created By</label>
-        <input type="text" value={createdBy || "Unknown"} readOnly />
-        <button type="submit">Create</button>
-      </form>
-    </div>
-    </div>
+      <Navbar />
+      <div className="task-form-container">
+        <div className="task-form">
+          <h2>Create Project</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Project Name</label>
+              <input
+                type="text"
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+                placeholder="Enter project name"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Created By</label>
+              <input type="text" value={createdBy || "Unknown"} readOnly />
+            </div>
+            <button type="submit" className="submit-btn">Create</button>
+          </form>
+        </div>
+      </div>
     </>
   );
 };

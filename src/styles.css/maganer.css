@@ -1,86 +1,181 @@
-/* .task-card {
-    position: relative;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 250px;
-    height: auto;
-  }
-  
-  .comment-input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-  }
-  
-  .comment-button {
-    margin-top: 5px;
-    padding: 5px 10px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .task-card.high {
-    background-color: #ffcccc; 
-    border-left: 5px solid red;
-  }
-  
-  .task-card.medium {
-    background-color: #fff4cc; 
-    border-left: 5px solid orange;
-  }
-  
-  .task-card.low {
-    background-color: #ccffcc; 
-    border-left: 5px solid green;
-  }
-  
-  .details-button {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .details-button:hover {
-    background-color: #0056b3;
-  }
 
-  .comment-box {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-  }
+.manager-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  padding: 2rem;
+  animation: fadeIn 0.5s ease-in-out;
+  margin-top: 35px;
   
-  .comment-box textarea {
+}
+
+
+.manager-card {
+  width: 95%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: fadeIn 0.7s ease-in-out;
+  color: white;
+}
+
+
+.manager-card h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+ 
+}
+
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+
+.task-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+  color: white;
+}
+
+.task-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+.task-card.low {
+  border-left: 6px solid #28a745;
+}
+.task-card.medium {
+  border-left: 6px solid #ffc107;
+}
+.task-card.high {
+  border-left: 6px solid #dc3545;
+}
+
+
+.task-card h3 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+}
+
+.task-card p {
+  font-size: 1rem;
+  color:black;
+  margin: 5px 0;
+}
+
+
+.task-details {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  text-align: left;
+  color: white;
+}
+
+
+.details-button,
+.submit-button {
+  margin-top: 1rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.details-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.submit-button {
+  background: #28a745;
+}
+
+.submit-button:hover {
+  background: #218838;
+  transform: scale(1.05);
+}
+
+
+.comment-box {
+  margin-top: 1rem;
+}
+
+.comment-box textarea {
+  width: 100%;
+  height: 80px;
+  border: none;
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 1rem;
+  outline: none;
+  background: rgba(221, 10, 10, 0.2);
+  backdrop-filter: blur(8px);
+  color: black;
+  transition: border 0.3s ease-in-out;
+}
+
+.comment-box textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.comment-box textarea:focus {
+  border: 2px solid #007bff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .manager-card {
     width: 100%;
-    height: 50px;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    resize: none;
+    padding: 1.8rem;
   }
-  
-  .submit-button {
-    margin-top: 5px;
-    padding: 8px 12px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  .task-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .submit-button:hover {
-    background-color: #218838;
-  }
-  
-  
-   */
+}

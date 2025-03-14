@@ -39,18 +39,22 @@ const ProjectList = () => {
       <div className="outerform">
         <div className="project-list">
           <h2>All Projects</h2>
-          {user && <p>Welcome, {user.name}!</p>}
+          {user && <p className="welcome-message">Welcome, {user.name}!</p>}
           <div className="task-grid">
             {projects.length > 0 ? (
               projects.map((p) => (
                 <div key={p._id} className="project-card">
-                  <h3>{p.project_name}</h3>
-                  <p><strong>Created by:</strong> {p.created_by?.name || "Unknown"}</p>
-                  <p><strong>Status:</strong> {p.status || "Not Available"}</p>
+                  <h3 className="project-title">{p.project_name}</h3>
+                  <p className="project-info">
+                    <strong>Created by:</strong> {p.created_by?.name || "Unknown"}
+                  </p>
+                  <p className="project-info">
+                    <strong>Status:</strong> {p.status || "Not Available"}
+                  </p>
                 </div>
               ))
             ) : (
-              <p>No projects found.</p>
+              <p className="no-projects-message">No projects found.</p>
             )}
           </div>
         </div>

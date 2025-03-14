@@ -9,7 +9,6 @@ const UserList = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [error, setError] = useState("");
 
-  
   useEffect(() => {
     const fetchUsers = async () => {
       const token = localStorage.getItem("token");
@@ -23,7 +22,6 @@ const UserList = () => {
         const decoded = jwtDecode(token);
         setCurrentUser(decoded);
 
-      
         const response = await axios.get("http://localhost:5000/api/users", {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -57,7 +55,7 @@ const UserList = () => {
                 </div>
               ))
             ) : (
-              <p>No users found.</p>
+              <p className="no-users">No users found.</p>
             )}
           </div>
         </div>

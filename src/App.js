@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./pages/Auth/Login";
 import CreateTask from "./components/createtask/Createtask";
-import AddComment from "./pages/Admin/AddComments";
+import AddComment from "./components/mamagerpage/AddComments";
 import Home from "./components/homepage/home";
 import Admindashboardhome from "./pages/Admin/AdminDashboard";
 import ProtectedRoute from "./pages/Auth/ProtectedRoute";
@@ -14,32 +14,37 @@ import UpdateUserRole from "./components/manage role/updaterole";
 import UserList from "./components/manage role/userlist";
 import UserRoleList from "./components/manage role/UserRoleList";
 import AssignedTasks from "./components/taskdetails/tasklisttouser";
-import ProjectUserSearch from "./pages/Manager/projectteamdetails";
+import Clientdashboard from "./components/Clientpage/clientDashboard";
+// import ClientProjects from "./components/Clientpage/clientDashboard";
+// import ProjectUserSearch from "./pages/Manager/projectteamdetails";
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
 
-       
         <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
           <Route path="/AdminDashboard" element={<Admindashboardhome />} />
-          <Route path="/createproject" element={<CreateProject/>}/>
+          <Route path="/createproject" element={<CreateProject />} />
           <Route path="/Createtask" element={<CreateTask />} />
           <Route path="/Usermanagement" element={<Register />} />
-          <Route path ="/updateproject" element={<UpdateProject/>}/>
-          <Route path ="/viewallproject" element={<ProjectList />} />
-          <Route path ="/Updaterole" element={<UpdateUserRole />} />
-          <Route path ="/Viewalluser" element={<UserList />} />
-          <Route path="/Viewroleuser" element={<UserRoleList/>} />
+          <Route path="/updateproject" element={<UpdateProject />} />
+          <Route path="/viewallproject" element={<ProjectList />} />
+          <Route path="/taskandcomments" element={<AddComment />} />
+          <Route path="/Updaterole" element={<UpdateUserRole />} />
+          <Route path="/Viewalluser" element={<UserList />} />
+          <Route path="/Viewroleuser" element={<UserRoleList />} />
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["Manager"]} />}>
           <Route path="/manager-dashboard" element={<AddComment />} />
-          <Route path="/team" element={<ProjectUserSearch />} />
+          {/* <Route path="/Createandtask" element={<CreateTask />} /> */}
+       
+        </Route>
+        <Route element={<ProtectedRoute allowedRoles={["Client"]} />}>
+          <Route path="/client-dashboard" element={< Clientdashboard/>} />
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["Employee"]} />}>

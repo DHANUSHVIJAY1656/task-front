@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "../navbar/nav.css";
 
-const Navbar = () => {
+const ProjectNavbar = () => {
   return (
     <div className="container">
       <nav className="navbar">
@@ -11,6 +11,11 @@ const Navbar = () => {
             <li>
               <Link to="/AdminDashboard" className="nav-item">
                 Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/taskandcomments" className="nav-item">
+                Create Task 
               </Link>
             </li>
             <li>
@@ -41,4 +46,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default ProjectNavbar;

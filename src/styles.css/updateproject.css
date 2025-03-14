@@ -1,66 +1,115 @@
-.card {
-  background: #ffffff;
-  padding: 25px;
+
+.outerform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  padding: 2rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+
+.update-card {
+  width: 95%;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 350px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   text-align: center;
-
+  animation: fadeIn 0.7s ease-in-out;
+  color: rgb(208, 12, 12);
 }
 
 
-.card h2 {
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 22px;
+.update-card h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 
-label {
-  display: block;
-  font-weight: 600;
+.form-group {
+  margin-bottom: 1.2rem;
   text-align: left;
-  margin: 10px 0 5px;
-  color: #444;
 }
 
 
-select, input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  background-color: #fff;
-}
-
-
-button {
-  width: 100%;
-  background-color: #007bff;
+.form-group label {
+  font-size: 1rem;
+  font-weight: bold;
   color: white;
-  padding: 10px;
+}
+
+
+.form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 5px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
-  font-size: 16px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.form-group select option {
+  color: black;
+}
+
+/* Focus effect */
+.form-group select:focus {
+  border: 2px solid #007bff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+
+.update-btn {
+  width: 100%;
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease-in-out;
+  margin-top: 1.5rem;
 }
 
-button:hover {
-  background-color: #0056b3;
+.update-btn:hover {
+  background: #218838;
+  transform: scale(1.05);
 }
 
-button:disabled {
-  background-color: #ccc;
+
+.update-btn:disabled {
+  background: gray;
   cursor: not-allowed;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-@media (max-width: 400px) {
-  .card {
-      width: 90%;
-      padding: 20px;
+
+@media (max-width: 600px) {
+  .update-card {
+    width: 100%;
+    padding: 1.8rem;
   }
 }

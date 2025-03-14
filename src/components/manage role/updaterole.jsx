@@ -3,7 +3,6 @@ import axios from "axios";
 import "../../styles.css/updateuserrole.css";
 import Navbar from "../navbar/usermanagenav";
 
-
 const UpdateUserRole = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
@@ -11,10 +10,8 @@ const UpdateUserRole = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
- 
   const roleOptions = ["Admin", "Manager", "Client", "Employee"];
 
-  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -30,7 +27,6 @@ const UpdateUserRole = () => {
     fetchUsers();
   }, []);
 
-  
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (!selectedUser || !role) {
@@ -48,8 +44,8 @@ const UpdateUserRole = () => {
         { userId: selectedUser, role },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-    //   setMessage("User role updated successfully!");
-      alert("User role updated successfully")
+
+      alert("You Have Successfully Updated UserRole");
     } catch (error) {
       setMessage(error.response?.data?.message || "Error updating role");
     } finally {
@@ -61,35 +57,37 @@ const UpdateUserRole = () => {
     <>
       <Navbar />
       <div className="outerform">
-        <div className="card">
+        <div className="update-card">
           <h2>Update User Role</h2>
 
           {message && <p className="message">{message}</p>}
 
           <form onSubmit={handleUpdate}>
-            {/* User Dropdown */}
-            <label>Select User</label>
-            <select onChange={(e) => setSelectedUser(e.target.value)} required>
-              <option value="">-- Select User --</option>
-              {users.map((user) => (
-                <option key={user._id} value={user._id}>
-                  {user.name} ({user.role})
-                </option>
-              ))}
-            </select>
+            <div className="form-group">
+              <label>Select User</label>
+              <select onChange={(e) => setSelectedUser(e.target.value)} required>
+                <option value="">-- Select User --</option>
+                {users.map((user) => (
+                  <option key={user._id} value={user._id}>
+                    {user.name} ({user.role})
+                  </option>
+                ))}
+              </select>
+            </div>
 
-            {/* Role Dropdown */}
-            <label>Select Role</label>
-            <select onChange={(e) => setRole(e.target.value)} required>
-              <option value="">-- Select Role --</option>
-              {roleOptions.map((r) => (
-                <option key={r} value={r}>
-                  {r}
-                </option>
-              ))}
-            </select>
+            <div className="form-group">
+              <label>Select Role</label>
+              <select onChange={(e) => setRole(e.target.value)} required>
+                <option value="">-- Select Role --</option>
+                {roleOptions.map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-            <button type="submit" disabled={loading}>
+            <button type="submit" className="update-btn" disabled={loading}>
               {loading ? "Updating..." : "Update Role"}
             </button>
           </form>
